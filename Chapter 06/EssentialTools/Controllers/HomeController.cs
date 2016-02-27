@@ -9,6 +9,8 @@ namespace EssentialTools.Controllers
 {
     public class HomeController : Controller
     {
+        private IValueCalculator calc;
+
         private Product[] products =
         {
             new Product { Name = "Kayak", Category = "Watersports", Price = 275M },
@@ -17,10 +19,13 @@ namespace EssentialTools.Controllers
             new Product { Name = "Corner flag", Category = "Soccer", Price = 34.95M }
         };
 
+        public HomeController(IValueCalculator calcParam, IValueCalculator calc2)
+        {
+            calc = calcParam;
+        }
+
         public ActionResult Index()
         {
-            LinqValueCalculator calc = new LinqValueCalculator();
-
             ShoppingCart cart = new ShoppingCart(calc) { Products = products };
             decimal totalValue = cart.CalculateProductTotal();
 
